@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+// import Alert from 'bootstrap/js/dist/alert';
 @Component({
   components: {}
 })
@@ -16,5 +17,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 </script>
 
 <style lang="scss" scoped>
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
 
 </style>
