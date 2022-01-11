@@ -38,7 +38,7 @@ import { Dropdown } from 'bootstrap';
 export default class VDropdown extends Vue {
   @Prop({ default: 'btn-primary' }) private variant!: string;
   @Prop({ default: 'Dropdown' }) private text!: string;
-  @Prop({ default: [] }) private items!: tViewValue[] | string;
+  @Prop({ default: [] }) private items!: tViewValue[] | string; // string needs to be parsed
 
   // public get _items(): tViewValue[] {
   //   // if (typeof this.items === 'string') {
@@ -57,12 +57,28 @@ export default class VDropdown extends Vue {
   //   }
   // }
   mounted() {
+  // beforeMount() {
     const options = this.$props;
     const ele = this.$refs.dropdown;
     // console.log('Dropdown', Dropdown);
     // console.log('variant', this.variant);
     // console.log('text', this.text);
-    console.log('mounted items', this.items);
+    console.warn('mounted Dropdown' );
+    console.log('- text:', this.text, );
+    console.log('- items:', this.items, );
+    console.log('- props:', options, );
+    if(typeof this.items === 'object'){
+      const vvArr:tViewValue[] = this.items as tViewValue[];
+      vvArr.forEach((element:tViewValue) => {
+      console.log('  - item vv:', element.view,', ', element.value);
+      });
+    } else {
+      console.log('  - item 1st char:', this.items[0]);
+      if(this.items[0] === '['){
+        this.items = JSON.parse(this.items);
+      } 
+      console.log('  - item string:', this.items[0], this.items);
+    }
     new Dropdown(ele, options);
   }
 

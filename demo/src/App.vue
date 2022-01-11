@@ -2,18 +2,10 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/wc">WC View</router-link>
     </div>
 
     
-    <wc-v-button>Default</wc-v-button>
-    <wc-v-button variant="btn-secondary">Secondary</wc-v-button>
-    <wc-v-button variant="btn-outline-secondary">Outline Secondary</wc-v-button>
-    <wc-v-dropdown text="Acctions Dropdown" :items="items" @clicked="onClickedItem"/>
-    <wc-v-dropdown text="Acctions Dropdown 2" :items="items" variant="btn-secondary" @on-click="onClickedItem">
-      <li class="dropdown-item" @click="onClickedItem('Manual Action')">Manual Action</li>
-      <li class="dropdown-item" @click="onClickedItem('Manual Action 2')">Manual Action 2</li>
-    </wc-v-dropdown>
 
     <router-view />
   </div>
@@ -26,23 +18,6 @@ import { Component, Vue } from "vue-property-decorator";
   },
 })
 export default class App extends Vue {
-  items: any[] = [
-    {
-      view: "Action 1",
-      value: "action1",
-    },
-    {
-      view: "Action 2",
-      value: false,
-    },
-    {
-      view: "Action 3",
-      value: ["action3", true],
-    },
-  ];
-  onClickedItem(item: any) {
-    console.log(item);
-  }
 }
 </script>
 <style lang="scss">
