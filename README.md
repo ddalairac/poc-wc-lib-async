@@ -1,4 +1,3 @@
-# poc-wc-lib-async
-Proof of Concept for a Asynchronous Web Components Library 
+# Components Lib Poc 
+How components will we be delivered to our teams ( HTML+CSS / WebComponents / Framework )
 
-https://ddalairac.github.io/poc-wc-lib-async/ 
