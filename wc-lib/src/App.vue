@@ -6,7 +6,10 @@
       <VButton variant="btn-secondary">Secondary</VButton>
       <VButton variant="btn-outline-secondary">Outline Secondary</VButton>
     </div>
-    <div class="components">∫
+    <div class="components">
+     <VAcordion/>
+    </div>
+    <div class="components">
       <VDropdown
         text="Acctions Dropdown"
         :items="items"
@@ -32,11 +35,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import VButton from './components/VButton.vue';
+import VAcordion from './components/VAcordion.vue';
 import VDropdown, { tViewValue } from './components/VDropdown.vue';
 
 @Component({
   components: {
     VButton,
+    VAcordion,
     VDropdown,
   },
 })

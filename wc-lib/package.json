@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --dest ../docs/wc-lib-async --target wc-async --name wc  --inline-vue 'src/components/*.vue' ",
+    "buildWC": "vue-cli-service build --dest ../docs/wc-lib-async --target wc-async --name wc  --inline-vue 'src/components/*.vue' ",
+    "buildLib": "vue-cli-service build --dest ../docs/lib-vue     --target lib      --name lib --inline-vue 'src/components/*.vue' ",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
