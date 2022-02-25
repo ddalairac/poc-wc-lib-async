@@ -27,6 +27,7 @@ class IconTooltip extends HTMLElement {
 
   getTemplate(className = '') {
     const wrapper = document.createElement('div');
+    
     if (className) wrapper.setAttribute('class', className);
     wrapper.innerHTML = `
       <span class="icon" tabindex="0">
