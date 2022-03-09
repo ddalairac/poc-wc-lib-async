@@ -7,22 +7,40 @@
         color: purple;
       }
     </style>
-  
 </head>
 <body>
     <h2>Example with Employee Card</h2>
     <employee-card id="ecard">
         <script>
-            const el = document.getElementById('ecard');
-            el.data = {
+            const c = document.getElementById('ecard');
+            c.data = {
                 'name': 'Leah Crystal',
                 'avatar': 'image.jpeg',
             };
         </script>
     </employee-card>
-    <!-- scripts -->
+
+    <script>
+        const onUpdate = () => {
+            alert();
+        }
+    </script>
+    <employee-card-hook id="ecard-hook" name="ORIGINAL NAME" avatar="image.jpeg"></employee-card-hook>
     
     <script src="employee-card.js"></script> 
+
+    <script>
+        const chook = document.getElementById('ecard-hook');
+        chook.onUpdate = () => {
+            alert(chook.data.name);
+        }
+        setTimeout(() => {
+            chook.data = {
+                    'name': 'NEW NAME',
+                    'avatar': 'image.jpeg',
+            }
+        }, 3000);
+    </script>
     
 </body>
 </html>
