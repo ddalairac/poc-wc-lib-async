@@ -1,0 +1,20 @@
+{
+  "name": "wc-litbuild",
+  "version": "1.0.0",
+  "description": "lit WC examples",
+  "main": "index.js",
+  "scripts": {
+    "serve": "wds tsc --watch",
+    "start": "tsc && web-dev-server --node-resolve --open --watch"
+  },
+  "author": "Diego Dalairac",
+  "license": "ISC",
+  "dependencies": {
+    "lit": "^2.2.0"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.1.30",
+    "eslint": "^8.11.0",
+    "typescript": "^4.3.5"
+  }
+}
