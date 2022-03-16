@@ -24,6 +24,13 @@
           Manual Action 2
         </li>
       </wc-v-dropdown>
+
+      <!-- <my-element name="Diego">
+        <p>This is child content</p>
+      </my-element> -->
+      <my-element-obj :arr="JSON.stringify(list)" num="1000" id="wc-obj"> 
+        <p>Other component</p>
+      </my-element-obj>
     </div>
   </div>
 </template>
@@ -35,6 +42,12 @@ import { Component, Vue } from 'vue-property-decorator';
   components: {},
 })
 export default class WCView extends Vue {
+  list = [1, 2, 4];
+
+  mounted(){
+    this.list = [1, 2, 4, 5];
+  }
+
   items: string /* any[] */ = JSON.stringify([
     {
       view: 'Action 1',
@@ -57,10 +70,10 @@ export default class WCView extends Vue {
 
 <style lang="scss">
 .components {
-    display: flex;
-    border-top: 1px solid #ccc;
-    padding: 30px 0 0;
-    margin: 30px;
+  display: flex;
+  border-top: 1px solid #ccc;
+  padding: 30px 0 0;
+  margin: 30px;
   > * {
     margin-right: 10px;
   }

@@ -1,0 +1,42 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <title>&lt;my-element&gt; Demo</title>
+  <!-- <script src="./node_modules/lit/polyfill-support.js"></script> -->
+  
+  
+  <style>
+    p {
+      border: solid 1px blue;
+      padding: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <my-element name="Diego">
+    <p>This is child content</p>
+  </my-element>
+  <my-element-obj arr="" num="1000" id="wc-obj">
+    <p>Other component</p>
+  </my-element-obj>
+
+  <script>
+    var list = [1, 2, 4];
+    var number = 1000;
+    var wc = document.getElementById('wc-obj');
+
+    wc.setAttribute('arr', JSON.stringify(list))
+
+    setTimeout(() => {
+      wc.setAttribute('num', 2222)
+      wc.setAttribute('arr', JSON.stringify([5, 6, 7]))
+    }, 2000);
+
+    setTimeout(() => {
+      wc.setAttribute('num', 2222)
+      wc.setAttribute('arr', JSON.stringify([5, 6, 7]))
+    }, 4000);
+  </script>
+
+
+<script type="module" src="./my-element.js"></script><script type="module" src="./my-element-obj.js"></script></body></html>

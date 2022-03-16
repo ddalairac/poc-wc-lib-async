@@ -1,0 +1,6 @@
+import{r as t,e,n as o,s as n,$ as r}from"./query-assigned-elements-9ae5f7c9.js";
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */var c=function(t,e,o,n){var r,c=arguments.length,l=c<3?e:null===n?n=Object.getOwnPropertyDescriptor(e,o):n;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(t,e,o,n);else for(var s=t.length-1;s>=0;s--)(r=t[s])&&(l=(c<3?r(l):c>3?r(e,o,l):r(e,o))||l);return c>3&&l&&Object.defineProperty(e,o,l),l},l=function(t,e){if("object"==typeof Reflect&&"function"==typeof Reflect.metadata)return Reflect.metadata(t,e)};let s=class extends n{constructor(){super(...arguments),this.name="World",this.count=0}render(){return r`<h1>${this.sayHello(this.name)}!</h1><button @click="${this._onClick}" part="button">Click Count: ${this.count}</button><slot></slot>`}_onClick(){this.count++,this.dispatchEvent(new CustomEvent("count-changed"))}sayHello(t){return`Hello, ${t}`}};s.styles=t`:host{display:block;border:solid 1px gray;padding:16px;max-width:800px}`,c([e(),l("design:type",Object)],s.prototype,"name",void 0),c([e({type:Number}),l("design:type",Object)],s.prototype,"count",void 0),s=c([o("my-element")],s);export{s as MyElement};
