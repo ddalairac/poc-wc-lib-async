@@ -8,8 +8,5 @@ This POC contains:
 - Demo for test implementation of WC in a SPA
 
 ## Web Components Doc
-https://docs.google.com/document/d/13uY7yN4JPTlsrj02aKQurg-CdEzesFOHMimxCo-PMWE/edit?usp=sharing 
-
-## Web Components PROS & CONS
-https://docs.google.com/document/d/1sn-mxtN4HZuiE3T-y4ozoPRL9zlZQXRT7G7JDmyrG60/edit?usp=sharing 
+https://docs.google.com/document/d/1Y73cCAqYSRMrpBBHOBosI8fAzvVbBFDgF6qfW4p0KTs/edit#
 
