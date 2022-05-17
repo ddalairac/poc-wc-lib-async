@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>wc vainilla</title>
+  <script src="./js/main.js" type="module"></script>
+  <link rel="stylesheet" type="text/css" href="css/styles.css" />
+</head>
+
+<body>
+  <h1> web components</h1>
+  <div>
+    <h2> Web component 1</h2>
+    <p>
+      External template example
+      <icon-tooltip id="wc1"
+        data-text="Your card validation code (CVC) is an extra security feature — it is the last 3 or 4 numbers on the back of your card."
+        img="https://mdn.github.io/web-components-examples/popup-info-box-web-component/img/alt.png">
+        <icon-tooltip />
+    </p>
+  </div>
+
+  <div>
+    <h2> Web component 2</h2>
+    <p>
+      Inner template example
+      <icon-tooltip2 id="wc2"
+        data-text="Your card validation code (CVC) is an extra security feature — it is the last 3 or 4 numbers on the back of your card."
+        img="https://mdn.github.io/web-components-examples/popup-info-box-web-component/img/alt.png">
+        <icon-tooltip2 />
+    </p>
+  </div>
+
+  <div>
+    <h2> Web component 3</h2>
+    <p>
+      Re render template example
+      <icon-tooltip3 id="wc3"
+        data-text="Your card validation code (CVC) is an extra security feature — it is the last 3 or 4 numbers on the back of your card."
+        img="https://mdn.github.io/web-components-examples/popup-info-box-web-component/img/alt.png">
+        <icon-tooltip3 />
+    </p>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      const wc1 = document.getElementById('wc1');
+      const wc2 = document.getElementById('wc2');
+      const wc3 = document.getElementById('wc3');
+      const newText = 'Text changed'
+      const newImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Notification-icon-Wikipedia-logo.svg/60px-Notification-icon-Wikipedia-logo.svg.png'
+
+      // wc1.dataText = newText
+      // wc2.dataText = newText
+      // wc3.dataText = newText
+      wc1.setAttribute('data-text', newText)
+      wc2.setAttribute('data-text', newText)
+      wc3.setAttribute('data-text', newText)
+
+      wc1.img = newImg
+      wc2.img = newImg
+      wc3.img = newImg
+      // console.log('wc1', wc1)
+      // console.log('wc2', wc2)
+      // console.log('wc3', wc3)
+      // console.log('Timeout')
+    }, 3000);
+  </script>
+
+</body>
+
+</html>
