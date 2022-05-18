@@ -1,6 +1,11 @@
 # Web Components JS Vainilla & Typescript
  [**Back to main README**](../README.md)
 
+# Includes tests and examples for
+- Separate html and css files from JS.
+- Ipdate component on property change
+- DOM modifications
+- Re-render component
 
 ## Project setup
 ```
