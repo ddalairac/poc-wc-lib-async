@@ -10,7 +10,7 @@
         "watch:scss": "npm run scss",
         "watch:tsc": "npm run tsc -- --watch",
         "watch": "npm run clean && npm-run-all --parallel watch:*",
-        "build": "npm run clean && npm run tsc && npm run css "
+        "build": "npm run clean && npm run tsc && npm run scss "
     },
     "keywords": [
         "typescript",

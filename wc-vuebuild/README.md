@@ -1,4 +1,5 @@
-# wc-lib
+ # WC Vue Build
+ [**Back to main README**](../README.md)
 
 ## Project setup
 ```
@@ -10,20 +11,8 @@ yarn install
 yarn serve
 ```
 
-### Compiles and minifies for production
+### Compiles and minifies for production as WC
 ```
-yarn build
-```
-
-### Run your unit tests
-```
-yarn test:unit
+yarn buildWC
 ```
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

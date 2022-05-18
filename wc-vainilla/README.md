@@ -1,4 +1,4 @@
-# Web Components JS Vainilla & Typescript
+# Web Components JS Vainilla
  [**Back to main README**](../README.md)
 
 
@@ -20,5 +20,5 @@ yarn build
 
 ## Demo
 ```
-I use the VsCode plugin "LiveServer", to serve "./index.html" on http://127.0.0.1:5500 
+Just open "demo.html" files on the browser
 ```
