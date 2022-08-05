@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>web components</title>
+  <script src="lib-async.js" type="module"></script>
+</head>
+
+<body cz-shortcut-listen="true">
+  <h1> web components</h1>
+  <h2>Icon Tooltip</h2>
+  <div>
+    <label for="cvc">Enter your CVC
+      <icon-tooltip data-text="Your card validation code (CVC) is an extra security feature — it is the last 3 or 4 numbers on the back of your card."
+        img="https://mdn.github.io/web-components-examples/popup-info-box-web-component/img/alt.png" />
+    </label>
+    <input type="text" id="cvc">
+  </div>
+
+
+  <h1> web components</h1>
+  <h2>List - Life Cycle</h2>
+  <div>
+      <wc-list data-text="Marvel Heros"/>
+  </div>
+  <script>
+    setTimeout(() => {
+      const itemElmList = document.querySelector('wc-list');
+      console.log(itemElmList)
+      itemElmList.setAttribute('data-text', 'No DC Heros')
+    }, 2000);
+  </script>
+
+
+</body>
+
+</html>

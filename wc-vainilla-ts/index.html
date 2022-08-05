@@ -68,6 +68,29 @@
       // console.log('wc3', wc3)
       // console.log('Timeout')
     }, 3000);
+
+    setTimeout(() => {
+      const wc1 = document.getElementById('wc1');
+      const wc2 = document.getElementById('wc2');
+      const wc3 = document.getElementById('wc3');
+      const newText = 'Text changed 2'
+      const newImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Notification-icon-Wikipedia-logo.svg/60px-Notification-icon-Wikipedia-logo.svg.png'
+
+      // wc1.dataText = newText
+      // wc2.dataText = newText
+      // wc3.dataText = newText
+      wc1.setAttribute('data-text', newText)
+      wc2.setAttribute('data-text', newText)
+      wc3.setAttribute('data-text', newText)
+
+      wc1.img = newImg
+      wc2.img = newImg
+      wc3.img = newImg
+      // console.log('wc1', wc1)
+      // console.log('wc2', wc2)
+      // console.log('wc3', wc3)
+      // console.log('Timeout')
+    }, 6000);
   </script>
 
 </body>

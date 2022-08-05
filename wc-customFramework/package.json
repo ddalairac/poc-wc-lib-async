@@ -1,0 +1,26 @@
+{
+    "name": "wc-lib",
+    "version": "1.0.0",
+    "description": "wc vainilla lib",
+    "main": "main.js",
+    "scripts": {
+        "clean": "rm -rf dist/*.* ",
+        "tsc": "tsc",
+        "scss": "npx node-sass -o css scss/ --output-style compressed",
+        "watch:tsc": "npm run tsc -- --watch",
+        "watch": "npm run clean && npm-run-all --parallel watch:*",
+        "build": "npm run clean && npm run tsc && npm run scss "
+    },
+    "keywords": [
+        "typescript",
+        "scss",
+        "wc"
+    ],
+    "author": "Dalairac Diego",
+    "license": "ISC",
+    "dependencies": {
+        "npm-run-all": "^4.1.5",
+        "scss": "^0.2.4",
+        "typescript": "^4.2.3"
+    }
+}
