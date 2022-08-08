@@ -1,31 +1,39 @@
+const compTemplate = document.createElement("template");
+compTemplate.innerHTML = '';
 export default class WCComp extends HTMLElement {
     constructor(compTemplate, compCss) {
         super();
         this.shadowroot = this.attachShadow({ mode: "open" });
         this.shadowroot.appendChild(compTemplate.content.cloneNode(true));
-        this.shadowroot.appendChild(this.setStylesFile(compCss));
+        this.compCss = compCss;
     }
-    onAttrChange(attribute, oldValue, newValue) {
+    onWcRender() { return ''; }
+    runRender() {
+        this.shadowroot.innerHTML = this.onWcRender();
+        this.shadowroot.appendChild(this.setStylesFile(this.compCss));
     }
-    onConnect() {
+    onWcAttrChange(attribute, oldValue, newValue) {
     }
-    onDisconnect() {
+    onWcConnect() {
     }
-    onObserved() {
+    onWcDisconnect() {
     }
-    onAdopted() {
+    onWcObserved() {
+    }
+    onWcAdopted() {
     }
     connectedCallback() {
-        this.onConnect();
+        this.onWcConnect();
+        this.runRender();
     }
     disconnectedCallback() {
-        this.onDisconnect();
+        this.onWcDisconnect();
     }
     adoptedCallback() {
-        this.onAdopted();
+        this.onWcAdopted();
     }
     observedAttributes() {
-        this.onObserved();
+        this.onWcObserved();
     }
     setStylesFile(file) {
         const linkElem = document.createElement('link');

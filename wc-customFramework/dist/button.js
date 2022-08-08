@@ -13,11 +13,17 @@ compTemplate.innerHTML = `
 let WCButton = class WCButton extends WCComp {
     constructor() {
         super(compTemplate, './dist/button.css');
-        this.onLoad();
     }
-    onLoad() {
-        this.initialTemplate = this.innerHTML;
+    onWcRender() {
+        return `
+      <button class="btn ${this.variant} ${this.isFading()}" ${this.isDisabled()}>
+      <slot>Button Text</slot>
+    </button>
+    `;
+    }
+    onConnect() {
         this.buttonEl = this.shadowroot.querySelector("button");
+        this.initialBtnText = this.buttonEl.innerText;
         this.buttonEl.addEventListener("click", (event) => {
             event.stopPropagation();
             this.buttonEl.dispatchEvent(new CustomEvent("click-app-button", {
@@ -26,25 +32,28 @@ let WCButton = class WCButton extends WCComp {
             }));
         });
     }
+    get inprogress() {
+        return !!this._inprogress;
+    }
     set inprogress(value) {
-        if (value === 'true') {
-            this.innerHTML = "Loading...";
-            this.buttonEl.setAttribute("disabled", "true");
-            this.buttonEl.classList.add("fading");
-        }
-        else {
-            this.innerHTML = this.initialTemplate;
-            this.buttonEl.removeAttribute("disabled");
-            this.buttonEl.classList.remove("fading");
-        }
+        this._inprogress = !!value;
+    }
+    get variant() {
+        return this._variant;
     }
     set variant(value) {
-        if (value === 'secondary') {
-            this.buttonEl.classList.add('secondary');
+        if (value === 'primary' || value === 'secondary') {
+            this._variant = value;
         }
         else {
-            this.buttonEl.classList.remove('secondary');
+            console.warn(`varian ${value} not valid`);
         }
+    }
+    isFading() {
+        return (this._inprogress) ? 'fading' : '';
+    }
+    isDisabled() {
+        return (this._inprogress) ? 'disabled' : '';
     }
 };
 WCButton = __decorate([

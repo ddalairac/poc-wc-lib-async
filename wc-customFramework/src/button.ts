@@ -8,15 +8,23 @@ compTemplate.innerHTML = /* html */ `
 @WCProp(['inprogress', 'variant'])
 class WCButton extends WCComp {
   constructor() {
-    super(compTemplate,'./dist/button.css');
-    this.onLoad()
+    super(compTemplate, './dist/button.css');
   }
-  buttonEl: HTMLButtonElement
-  initialTemplate: string
 
-  onLoad() {
-    this.initialTemplate = this.innerHTML;
+  buttonEl: HTMLButtonElement
+  initialBtnText: string
+
+  override onWcRender() {
+    return /* html */ `
+      <button class="btn ${this.variant} ${this.isFading()}" ${this.isDisabled()}>
+      <slot>Button Text</slot>
+    </button>
+    `;
+  }
+
+  onConnect() {
     this.buttonEl = this.shadowroot.querySelector("button")!;
+    this.initialBtnText = this.buttonEl.innerText;
     // console.log('buttonEl:', this.buttonEl)
     this.buttonEl.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -29,24 +37,35 @@ class WCButton extends WCComp {
     });
   }
 
+  _inprogress: boolean
+  get inprogress() {
+    return !!this._inprogress
+  }
   set inprogress(value) {
-    if (value === 'true') {
-      this.innerHTML = "Loading...";
-      this.buttonEl.setAttribute("disabled", "true");
-      this.buttonEl.classList.add("fading");
+    this._inprogress = !!value
+    // if (value === 'true') {
+    //   this.buttonEl.innerHTML = "Loading...";
+    // } else {
+    //   this.buttonEl.innerHTML = this.initialBtnText;
+    // }
+  }
+  _variant: string
+  get variant(): string {
+    return this._variant
+  }
+  set variant(value) {
+    if (value === 'primary' || value === 'secondary') {
+      this._variant = value
     } else {
-      this.innerHTML = this.initialTemplate;
-      this.buttonEl.removeAttribute("disabled");
-      this.buttonEl.classList.remove("fading");
+      console.warn(`varian ${value} not valid`)
     }
   }
 
-  set variant(value) {
-    if (value === 'secondary') {
-      this.buttonEl.classList.add('secondary')
-    } else {
-      this.buttonEl.classList.remove('secondary')
-    }
+  isFading() {
+    return (this._inprogress) ? 'fading' : ''
+  }
+  isDisabled() {
+    return (this._inprogress) ? 'disabled' : ''
   }
 }
 

@@ -21,8 +21,8 @@ export function WCProp(customProps: string[]) {
         } else {
           console.warn(`attribute ${attribute} not defined`)
         }
-        this.onAttrChange(attribute, oldValue, newValue)
-
+        this.onWcAttrChange(attribute, oldValue, newValue)
+        this.runRender()
       }
     }
   }

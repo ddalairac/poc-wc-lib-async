@@ -1,47 +1,56 @@
-
+const compTemplate = document.createElement("template");
+compTemplate.innerHTML = ''
 export default abstract class WCComp extends HTMLElement {
-  constructor(compTemplate,compCss) {
+  constructor(compTemplate, compCss) {
     super();
     this.shadowroot = this.attachShadow({ mode: "open" });
     this.shadowroot.appendChild(compTemplate.content.cloneNode(true));
-    this.shadowroot.appendChild(this.setStylesFile(compCss));
+    this.compCss = compCss
   }
-
+  compCss
   protected shadowroot: ShadowRoot
 
-  protected onAttrChange(attribute, oldValue, newValue){
+  /* abstract */ onWcRender(){return ''}
+
+  protected runRender() {
+    this.shadowroot.innerHTML = this.onWcRender()
+    this.shadowroot.appendChild(this.setStylesFile(this.compCss));
+  }
+
+  protected onWcAttrChange(attribute, oldValue, newValue) {
     // console.log('onAttrChange', { attribute, oldValue, newValue })
   }
-  protected onConnect(){
+  protected onWcConnect() {
     // console.log('onConnect')
   }
-  protected onDisconnect(){
+  protected onWcDisconnect() {
     // console.log('onDisconnect')
   }
-  protected onObserved(){
+  protected onWcObserved() {
     // console.log('onObserved')
   }
-  protected onAdopted(){
+  protected onWcAdopted() {
     // console.log('onObserved')
   }
 
-  connectedCallback(){
+  connectedCallback() {
     // console.log('connectedCallback')
-    this.onConnect()
-  }
-  
-  disconnectedCallback(){
-    // console.log('disconnectedCallback')
-    this.onDisconnect()
+    this.onWcConnect()
+    this.runRender() 
   }
 
-  adoptedCallback(){
-    // console.log('adoptedCallback')
-    this.onAdopted()
+  disconnectedCallback() {
+    // console.log('disconnectedCallback')
+    this.onWcDisconnect()
   }
-  observedAttributes(){
+
+  adoptedCallback() {
+    // console.log('adoptedCallback')
+    this.onWcAdopted()
+  }
+  observedAttributes() {
     // console.log('observedAttributes')
-    this.onObserved()
+    this.onWcObserved()
   }
 
   protected setStylesFile(file): HTMLLinkElement {

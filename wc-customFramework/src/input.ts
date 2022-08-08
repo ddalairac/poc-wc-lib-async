@@ -2,55 +2,46 @@ import WCComp from './WCComp.js'
 import { WCProp } from './WCProp.js'
 
 const compTemplate = document.createElement("template");
-compTemplate.innerHTML = /* html */ `
-<div>
-<label></label>
-<input>
-<span>Message</span>
-</div>
-`;
+compTemplate.innerHTML
 @WCProp(['errormsj', 'validation', 'label'])
 class WCInput extends WCComp {
   constructor() {
     super(compTemplate, './dist/input.css');
-    this.onLoad();
   }
-  divEl: HTMLDivElement
-  spanEl: HTMLSpanElement
-  labelEl: HTMLLabelElement
-  inputEl: HTMLInputElement
 
+  _errormsj
+  get errormsj(): string {
+    return this._errormsj;
+  }
   set errormsj(value: string) {
-    console.log('spanEl',this.spanEl.textContent,this.spanEl)
-    this.spanEl.textContent = value
+    this._errormsj = value
+    // this.spanEl.textContent = value
   }
 
+  _label: string
+  get label(): string {
+    return this._label
+  }
   set label(value: string) {
-    console.log('labelEl',this.labelEl.textContent,this.labelEl)
-    this.labelEl.textContent = value
+    this._label = value
   }
 
+  _validation: string
+  get validation(): string {
+    return this._validation
+  }
   set validation(value: string) {
-    // console.log('validation',value)
-    if (value === 'invalid') {
-      this.divEl.classList.add('invalid')
-    } else {
-      this.divEl.classList.remove('invalid')
-    }
+    this._validation = value
   }
 
-  onLoad() {
-    // console.log('comp imput onLoad')
-    this.divEl = this.shadowRoot.querySelector("div");
-    this.labelEl = this.shadowRoot.querySelector("label")!;
-    this.spanEl = this.shadowRoot.querySelector("span")!;
-    this.inputEl = this.shadowRoot.querySelector("input");
-    // this.inputEl.type = this.getAttribute("type")!;
 
-    this.inputEl.addEventListener("input", (event: Event) => {
+  onWcConnect() {
+    const inputEl = this.shadowRoot.querySelector("input");
+
+    inputEl.addEventListener("input", (event: Event) => {
       event.stopPropagation();
       const target = event.target as HTMLInputElement;
-      this.inputEl?.dispatchEvent(
+      inputEl?.dispatchEvent(
         new CustomEvent("app-input", {
           bubbles: true,
           composed: true,
@@ -60,12 +51,18 @@ class WCInput extends WCComp {
     });
   }
 
-  onConnect() {
-    // console.log('comp imput onConnect')
+  onWcAttrChange(attribute, oldValue, newValue) {
   }
 
-  onAttrChange(attribute, oldValue, newValue) {
-    this.spanEl.textContent = newValue;
+  override onWcRender() {
+    console.log('render input')
+    return /* html */ `
+    <div class="${this._validation}">
+      <label>${this._label}</label>
+      <input>
+      <span>${this._errormsj}</span>
+    </div>
+    `;
   }
 
 }
