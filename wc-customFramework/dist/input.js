@@ -1,82 +1,64 @@
-const template = document.createElement("template");
-template.innerHTML = `
-<style>
-  label {
-    display: block;
-  }
-  input {
-    min-width: 200px;
-    border-radius: 3px;
-    border: 1px solid lightgray;
-    padding: 10px;
-  }
-  span {
-    font-size: 0.8rem;
-    display: none;
-  }
-  :host([validation="invalid"]) span {
-    display: block;
-    color: red;
-  }
-
-  :host([validation="invalid"]) input {
-    border-color: red;
-  }
-  :host([validation="valid"]) span {
-    display: block;
-    color: green;
-  }
-
-  :host([validation="valid"]) input {
-    border-color: green;
-  }
-</style>
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+import WCComp from './WCComp.js';
+import { WCProp } from './WCProp.js';
+const compTemplate = document.createElement("template");
+compTemplate.innerHTML = `
+<div>
 <label></label>
 <input>
 <span>Message</span>
+</div>
 `;
-class WCInput extends HTMLElement {
+let WCInput = class WCInput extends WCComp {
     constructor() {
-        super();
-        this.attachShadow({ mode: "open" });
+        super(compTemplate, './dist/input.css');
+        this.onLoad();
     }
-    get help() {
-        return this.getAttribute("help");
+    set errormsj(value) {
+        console.log('spanEl', this.spanEl.textContent, this.spanEl);
+        this.spanEl.textContent = value;
     }
-    set help(help) {
-        this.setAttribute("help", help);
+    set label(value) {
+        console.log('labelEl', this.labelEl.textContent, this.labelEl);
+        this.labelEl.textContent = value;
     }
-    get validation() {
-        return this.getAttribute("validation");
+    set validation(value) {
+        if (value === 'invalid') {
+            this.divEl.classList.add('invalid');
+        }
+        else {
+            this.divEl.classList.remove('invalid');
+        }
     }
-    set validation(validation) {
-        this.setAttribute("validation", validation);
-    }
-    connectedCallback() {
-        var _a, _b, _c, _d;
-        (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(template.content.cloneNode(true));
-        this.labelEl = (_b = this.shadowRoot) === null || _b === void 0 ? void 0 : _b.querySelector("label");
-        this.labelEl.textContent = this.getAttribute("label");
-        this.spanEl = (_c = this.shadowRoot) === null || _c === void 0 ? void 0 : _c.querySelector("span");
-        this.spanEl.textContent = this.getAttribute("help");
-        const input = (_d = this.shadowRoot) === null || _d === void 0 ? void 0 : _d.querySelector("input");
-        input.type = this.getAttribute("type");
-        input === null || input === void 0 ? void 0 : input.addEventListener("input", (event) => {
+    onLoad() {
+        this.divEl = this.shadowRoot.querySelector("div");
+        this.labelEl = this.shadowRoot.querySelector("label");
+        this.spanEl = this.shadowRoot.querySelector("span");
+        this.inputEl = this.shadowRoot.querySelector("input");
+        this.inputEl.addEventListener("input", (event) => {
+            var _a;
             event.stopPropagation();
             const target = event.target;
-            input === null || input === void 0 ? void 0 : input.dispatchEvent(new CustomEvent("app-input", {
+            (_a = this.inputEl) === null || _a === void 0 ? void 0 : _a.dispatchEvent(new CustomEvent("app-input", {
                 bubbles: true,
                 composed: true,
                 detail: target.value,
             }));
         });
     }
-    static get observedAttributes() {
-        return ["help"];
+    onConnect() {
     }
-    attributeChangedCallback(attribute, oldValue, newValue) {
+    onAttrChange(attribute, oldValue, newValue) {
         this.spanEl.textContent = newValue;
     }
-}
+};
+WCInput = __decorate([
+    WCProp(['errormsj', 'validation', 'label'])
+], WCInput);
 customElements.define("app-input", WCInput);
 //# sourceMappingURL=input.js.map

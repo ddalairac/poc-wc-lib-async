@@ -27,10 +27,11 @@
 </head>
 
 <body>
-  <app-input></app-input>
+  <app-input validation="invalid"  label="some label" errormsj="some help error"></app-input>
   <app-button inprogress="true" variant="primary">A button</app-button>
   <script>
     var appButton
+    var appInput
     document.addEventListener("click-app-button", (event) => {
       console.log("clicked the button", event);
     });
@@ -41,10 +42,17 @@
 
     setTimeout(() => {
       appButton = document.querySelector("app-button")
+      appInput = document.querySelector("app-input")
+
       if (appButton) { 
-        appButton.removeAttribute("inprogress", "true"); 
+        appButton.removeAttribute("inprogress"); 
         appButton.setAttribute("variant", "secondary"); 
-        console.log('appButton',appButton)
+      }
+      if(appInput){
+        appInput.setAttribute("validation",'default'); 
+        appInput.setAttribute("errormsj",''); 
+        appInput.setAttribute("label",'other label'); 
+
       }
     }, 3000);
   </script>
