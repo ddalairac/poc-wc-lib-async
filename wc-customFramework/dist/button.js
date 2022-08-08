@@ -1,5 +1,12 @@
-const buttonTemplate = document.createElement("template");
-buttonTemplate.innerHTML = `
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+import { WCProp } from './wc-fr.js';
+const compTemplate = document.createElement("template");
+compTemplate.innerHTML = `
 <style>
   :host {
     display: block;
@@ -29,6 +36,9 @@ buttonTemplate.innerHTML = `
   .fading {
     animation: fading 0.5s infinite;
   }
+  .secondary {
+    background-color:grey;
+  }
 
   @keyframes fading {
     0% {
@@ -44,16 +54,20 @@ buttonTemplate.innerHTML = `
 </style>
 <button class="btn"><slot>Button Text</slot></button>
 `;
-class WCButton extends HTMLElement {
+let WCButton = class WCButton extends HTMLElement {
     constructor() {
+        var _a;
         super();
         this.attachShadow({ mode: "open" });
+        (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(compTemplate.content.cloneNode(true));
+        this.onLoad();
+        console.log('-----constructor', this);
     }
-    connectedCallback() {
-        var _a, _b;
-        (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(buttonTemplate.content.cloneNode(true));
-        this.buttonEl = (_b = this.shadowRoot) === null || _b === void 0 ? void 0 : _b.querySelector("button");
-        this.initialTempleate = this.innerHTML;
+    onLoad() {
+        var _a;
+        this.initialTemplate = this.innerHTML;
+        this.buttonEl = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector("button");
+        console.log('buttonEl:', this.buttonEl);
         this.buttonEl.addEventListener("click", (event) => {
             event.stopPropagation();
             this.buttonEl.dispatchEvent(new CustomEvent("click-app-button", {
@@ -62,32 +76,32 @@ class WCButton extends HTMLElement {
             }));
         });
     }
-    set inprogress(progress) {
-        if (progress) {
-            this.setAttribute("inprogress", "true");
-        }
-        else {
-            this.removeAttribute("inprogress");
-        }
+    connectedCallback() {
+        console.log('-----connectedCallback', this);
     }
-    get inprogress() {
-        return this.getAttribute("inprogress");
-    }
-    static get observedAttributes() {
-        return ["inprogress"];
-    }
-    attributeChangedCallback(attribute, oldValue, newValue) {
-        if (newValue) {
+    set inprogress(value) {
+        if (value === 'true') {
             this.innerHTML = "Loading...";
             this.buttonEl.setAttribute("disabled", "true");
             this.buttonEl.classList.add("fading");
         }
         else {
-            this.innerHTML = this.initialTempleate;
+            this.innerHTML = this.initialTemplate;
             this.buttonEl.removeAttribute("disabled");
             this.buttonEl.classList.remove("fading");
         }
     }
-}
+    set variant(value) {
+        if (value === 'secondary') {
+            this.buttonEl.classList.add('secondary');
+        }
+        else {
+            this.buttonEl.classList.remove('secondary');
+        }
+    }
+};
+WCButton = __decorate([
+    WCProp(['inprogress', 'variant'])
+], WCButton);
 customElements.define("app-button", WCButton);
 //# sourceMappingURL=button.js.map

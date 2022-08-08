@@ -1,5 +1,7 @@
-const buttonTemplate = document.createElement("template");
-buttonTemplate.innerHTML = /* html */ `
+import { WCProp } from './wc-fr.js'
+
+const compTemplate = document.createElement("template");
+compTemplate.innerHTML = /* html */ `
 <style>
   :host {
     display: block;
@@ -29,6 +31,9 @@ buttonTemplate.innerHTML = /* html */ `
   .fading {
     animation: fading 0.5s infinite;
   }
+  .secondary {
+    background-color:grey;
+  }
 
   @keyframes fading {
     0% {
@@ -44,19 +49,22 @@ buttonTemplate.innerHTML = /* html */ `
 </style>
 <button class="btn"><slot>Button Text</slot></button>
 `;
-
+@WCProp(['inprogress', 'variant'])
 class WCButton extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    this.shadowRoot?.appendChild(compTemplate.content.cloneNode(true));
+    this.onLoad()
+    console.log('-----constructor', this)
   }
-  buttonEl:HTMLButtonElement
-  initialTempleate:string
+  buttonEl: HTMLButtonElement
+  initialTemplate: string
 
-  connectedCallback() {
-    this.shadowRoot?.appendChild(buttonTemplate.content.cloneNode(true));
+  onLoad() {
+    this.initialTemplate = this.innerHTML;
     this.buttonEl = this.shadowRoot?.querySelector("button")!;
-    this.initialTempleate = this.innerHTML;
+    console.log('buttonEl:', this.buttonEl)
     this.buttonEl.addEventListener("click", (event) => {
       event.stopPropagation();
       this.buttonEl.dispatchEvent(
@@ -68,31 +76,27 @@ class WCButton extends HTMLElement {
     });
   }
 
-  set inprogress(progress) {
-    if (progress) {
-      this.setAttribute("inprogress", "true");
-    } else {
-      this.removeAttribute("inprogress");
-    }
+  connectedCallback() {
+    console.log('-----connectedCallback', this)
   }
 
-  get inprogress() {
-    return this.getAttribute("inprogress");
-  }
-
-  static get observedAttributes() {
-    return ["inprogress"];
-  }
-
-  attributeChangedCallback(attribute, oldValue, newValue) {
-    if (newValue) {
+  set inprogress(value) {
+    if (value === 'true') {
       this.innerHTML = "Loading...";
       this.buttonEl.setAttribute("disabled", "true");
       this.buttonEl.classList.add("fading");
     } else {
-      this.innerHTML = this.initialTempleate;
+      this.innerHTML = this.initialTemplate;
       this.buttonEl.removeAttribute("disabled");
       this.buttonEl.classList.remove("fading");
+    }
+  }
+
+  set variant(value) {
+    if (value === 'secondary') {
+      this.buttonEl.classList.add('secondary')
+    } else {
+      this.buttonEl.classList.remove('secondary')
     }
   }
 }
