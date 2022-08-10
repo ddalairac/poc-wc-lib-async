@@ -3,19 +3,18 @@ export function WCProp(customProps) {
         return class extends target {
             constructor(..._args) {
                 super(..._args);
+                console.log(' * FACTORY class WCProp', this);
             }
             static get observedAttributes() {
                 return [...customProps];
             }
-            attributeChangedCallback(attribute, oldValue, newValue) {
+            onCustomAtributeChanged(attribute, oldValue, newValue) {
                 if (customProps.includes(attribute)) {
                     this[attribute] = newValue;
                 }
                 else {
                     console.warn(`attribute ${attribute} not defined`);
                 }
-                this.onWcAttrChange(attribute, oldValue, newValue);
-                this.runRender();
             }
         };
     };

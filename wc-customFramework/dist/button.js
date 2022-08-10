@@ -13,20 +13,28 @@ compTemplate.innerHTML = `
 let WCButton = class WCButton extends WCComp {
     constructor() {
         super(compTemplate, './dist/button.css');
+        console.log('...class WCButton');
     }
     onWcRender() {
         return `
-      <button class="btn ${this.variant} ${this.isFading()}" ${this.isDisabled()}>
+      <button class="btn ${this.variant} ${this.isFading()}" ${this.isDisabled()} >
       <slot>Button Text</slot>
     </button>
     `;
     }
     onConnect() {
-        this.buttonEl = this.shadowroot.querySelector("button");
-        this.initialBtnText = this.buttonEl.innerText;
-        this.buttonEl.addEventListener("click", (event) => {
+        this.addListeners();
+    }
+    onAtributeChanged(attribute, oldValue, newValue) {
+        this.addListeners();
+    }
+    addListeners() {
+        const buttonEl = this.shadowRoot.querySelector("button");
+        console.log('buttonEl:', buttonEl);
+        buttonEl.addEventListener("click", (event) => {
+            console.log('buttonEl: click');
             event.stopPropagation();
-            this.buttonEl.dispatchEvent(new CustomEvent("click-app-button", {
+            buttonEl.dispatchEvent(new CustomEvent("click-app-button", {
                 bubbles: true,
                 composed: true,
             }));

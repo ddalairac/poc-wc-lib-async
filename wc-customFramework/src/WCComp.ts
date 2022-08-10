@@ -6,51 +6,64 @@ export default abstract class WCComp extends HTMLElement {
     this.shadowroot = this.attachShadow({ mode: "open" });
     this.shadowroot.appendChild(compTemplate.content.cloneNode(true));
     this.compCss = compCss
+
+    console.log(' * abstract class WCComp')
   }
   compCss
   protected shadowroot: ShadowRoot
 
   /* abstract */ onWcRender(){return ''}
+  /* abstract */ onCustomAtributeChanged(attribute, oldValue, newValue):void{}
 
   protected runRender() {
     this.shadowroot.innerHTML = this.onWcRender()
     this.shadowroot.appendChild(this.setStylesFile(this.compCss));
   }
 
-  protected onWcAttrChange(attribute, oldValue, newValue) {
-    // console.log('onAttrChange', { attribute, oldValue, newValue })
+
+  protected onBeforeAtributeChanged() {
+    console.log('onBeforeAtributeChanged')
   }
-  protected onWcConnect() {
-    // console.log('onConnect')
+  protected onAtributeChanged(attribute, oldValue, newValue) {
+    console.log('onAttrChange', { attribute, oldValue, newValue })
   }
-  protected onWcDisconnect() {
-    // console.log('onDisconnect')
+  protected onConnectd() {
+    console.log('onConnect',this)
   }
-  protected onWcObserved() {
-    // console.log('onObserved')
+  protected onDisconnected() {
+    console.log('onDisconnect')
   }
-  protected onWcAdopted() {
-    // console.log('onObserved')
+  protected onObserved() {
+    console.log('onObserved')
+  }
+  protected onAdopted() {
+    console.log('onObserved')
   }
 
   connectedCallback() {
     // console.log('connectedCallback')
-    this.onWcConnect()
     this.runRender() 
+    this.onConnectd()
   }
-
   disconnectedCallback() {
     // console.log('disconnectedCallback')
-    this.onWcDisconnect()
+    this.onDisconnected()
   }
-
   adoptedCallback() {
     // console.log('adoptedCallback')
-    this.onWcAdopted()
+    this.onAdopted()
   }
   observedAttributes() {
     // console.log('observedAttributes')
-    this.onWcObserved()
+    this.onObserved()
+  }
+
+  attributeChangedCallback(attribute, oldValue, newValue) {
+    // console.log('attributeChangedCallback', { attribute, oldValue, newValue })
+    this.onBeforeAtributeChanged()
+    this.onCustomAtributeChanged(attribute, oldValue, newValue)
+    this.runRender()
+    this.onAtributeChanged(attribute, oldValue, newValue)
   }
 
   protected setStylesFile(file): HTMLLinkElement {

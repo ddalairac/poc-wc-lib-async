@@ -6,34 +6,50 @@ export default class WCComp extends HTMLElement {
         this.shadowroot = this.attachShadow({ mode: "open" });
         this.shadowroot.appendChild(compTemplate.content.cloneNode(true));
         this.compCss = compCss;
+        console.log(' * abstract class WCComp');
     }
     onWcRender() { return ''; }
+    onCustomAtributeChanged(attribute, oldValue, newValue) { }
     runRender() {
         this.shadowroot.innerHTML = this.onWcRender();
         this.shadowroot.appendChild(this.setStylesFile(this.compCss));
     }
-    onWcAttrChange(attribute, oldValue, newValue) {
+    onBeforeAtributeChanged() {
+        console.log('onBeforeAtributeChanged');
     }
-    onWcConnect() {
+    onAtributeChanged(attribute, oldValue, newValue) {
+        console.log('onAttrChange', { attribute, oldValue, newValue });
     }
-    onWcDisconnect() {
+    onConnectd() {
+        console.log('onConnect', this);
     }
-    onWcObserved() {
+    onDisconnected() {
+        console.log('onDisconnect');
     }
-    onWcAdopted() {
+    onObserved() {
+        console.log('onObserved');
+    }
+    onAdopted() {
+        console.log('onObserved');
     }
     connectedCallback() {
-        this.onWcConnect();
         this.runRender();
+        this.onConnectd();
     }
     disconnectedCallback() {
-        this.onWcDisconnect();
+        this.onDisconnected();
     }
     adoptedCallback() {
-        this.onWcAdopted();
+        this.onAdopted();
     }
     observedAttributes() {
-        this.onWcObserved();
+        this.onObserved();
+    }
+    attributeChangedCallback(attribute, oldValue, newValue) {
+        this.onBeforeAtributeChanged();
+        this.onCustomAtributeChanged(attribute, oldValue, newValue);
+        this.runRender();
+        this.onAtributeChanged(attribute, oldValue, newValue);
     }
     setStylesFile(file) {
         const linkElem = document.createElement('link');

@@ -6,11 +6,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import WCComp from './WCComp.js';
 import { WCProp } from './WCProp.js';
+import { WCEvent } from './WCEvent.js';
 const compTemplate = document.createElement("template");
 compTemplate.innerHTML;
 let WCInput = class WCInput extends WCComp {
     constructor() {
         super(compTemplate, './dist/input.css');
+        console.log('...class WCInput');
+        this.someevent = 'bla bla';
+        console.log('someevent ', this.someevent);
     }
     get errormsj() {
         return this._errormsj;
@@ -30,22 +34,38 @@ let WCInput = class WCInput extends WCComp {
     set validation(value) {
         this._validation = value;
     }
-    onWcConnect() {
-        const inputEl = this.shadowRoot.querySelector("input");
-        inputEl.addEventListener("input", (event) => {
-            event.stopPropagation();
-            const target = event.target;
-            inputEl === null || inputEl === void 0 ? void 0 : inputEl.dispatchEvent(new CustomEvent("app-input", {
-                bubbles: true,
-                composed: true,
-                detail: target.value,
-            }));
-        });
+    onConnect() {
+        this.addListeners();
     }
-    onWcAttrChange(attribute, oldValue, newValue) {
+    onBeforeAtributeChanged() {
+        this.cleanListeners();
+    }
+    onAtributeChanged(attribute, oldValue, newValue) {
+        this.addListeners();
+    }
+    onDisconnected() {
+        this.cleanListeners();
+    }
+    clickHandler(event) {
+        event.stopPropagation();
+        const target = event.target;
+        this.dispatchEvent(new CustomEvent("app-input", {
+            bubbles: true,
+            composed: true,
+            detail: target.value,
+        }));
+    }
+    addListeners() {
+        const inputEl = this.shadowRoot.querySelector("input");
+        inputEl.addEventListener("input", this.clickHandler.bind(this), true);
+    }
+    cleanListeners() {
+        const inputEl = this.shadowRoot.querySelector("input");
+        if (inputEl) {
+            inputEl.removeEventListener('input', this.clickHandler, true);
+        }
     }
     onWcRender() {
-        console.log('render input');
         return `
     <div class="${this._validation}">
       <label>${this._label}</label>
@@ -55,6 +75,9 @@ let WCInput = class WCInput extends WCComp {
     `;
     }
 };
+__decorate([
+    WCEvent
+], WCInput.prototype, "someevent", void 0);
 WCInput = __decorate([
     WCProp(['errormsj', 'validation', 'label'])
 ], WCInput);

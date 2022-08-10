@@ -6,7 +6,7 @@ export function WCProp(customProps: string[]) {
     return class extends target {
       constructor(..._args: any[]) { // _ es para que typescript entienda que no voy a usarlos, pero tengo que pasarlos.
         super(..._args);
-        // console.log(' * new class: ', this);
+        console.log(' * FACTORY class WCProp', this);
       }
 
       static get observedAttributes() {
@@ -14,16 +14,24 @@ export function WCProp(customProps: string[]) {
         return [...customProps];
       }
 
-      attributeChangedCallback(attribute, oldValue, newValue) {
-        // console.log('attributeChangedCallback', { attribute, oldValue, newValue })
+      onCustomAtributeChanged(attribute, oldValue, newValue) {
         if (customProps.includes(attribute)) {
           this[attribute] = newValue
         } else {
           console.warn(`attribute ${attribute} not defined`)
         }
-        this.onWcAttrChange(attribute, oldValue, newValue)
-        this.runRender()
       }
+      // attributeChangedCallback(attribute, oldValue, newValue) {
+      //   // console.log('attributeChangedCallback', { attribute, oldValue, newValue })
+      //   if (customProps.includes(attribute)) {
+      //     this[attribute] = newValue
+      //   } else {
+      //     console.warn(`attribute ${attribute} not defined`)
+      //   }
+      //   this.onBeforeAtributeChanged()
+      //   this.runRender()
+      //   this.onAtributeChanged(attribute, oldValue, newValue)
+      // }
     }
   }
 }
