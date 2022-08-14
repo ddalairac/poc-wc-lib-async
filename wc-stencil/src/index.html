@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Stencil Component Starter</title>
+
+  <script type="module" src="/build/wc-stencil.esm.js"></script>
+  <script nomodule src="/build/wc-stencil.js"></script>
+  <style>
+    p {
+      color: grey;
+    }
+  </style>
+</head>
+
+<body>
+  <p>some text</p>
+  <my-input name="full_name"></my-input>
+
+  <my-component someStr="World! " bool="true">Slot content</my-component>
+  
+  <button id="root-btn">Toggle (trigger method outside component)</button>
+
+  <script>
+    // HTML Elements
+    const myComponent = document.querySelector('my-component')
+    const toggleBTN = document.querySelector('#root-btn')
+
+    // Props change
+    let bool = true
+    setInterval(() => {
+      if (bool) {
+        myComponent.setAttribute('someStr', 'Hello')
+        myComponent.setAttribute('bool', 'true')
+      } else {
+        myComponent.setAttribute('someStr', 'World')
+        myComponent.setAttribute('bool', 'false')
+      }
+      bool = !bool
+    }, 3000);
+    
+    // event listener
+    toggleBTN.addEventListener('click', () => {
+      myComponent.toggle();
+    });
+    myComponent.addEventListener('myAvengerEvent', event => {
+      console.log('myAvengerEvent', event);
+    });
+  </script>
+</body>
+
+</html>

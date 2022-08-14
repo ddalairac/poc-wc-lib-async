@@ -1,0 +1,85 @@
+my-component {
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+/* shadow: false */
+/* :host[bool=true] .bool-value{ */
+
+/* shadow: true */
+my-component[bool='true'] .bool-value p {
+  color: green;
+}
+my-component[bool='false'] .bool-value p {
+  color: red;
+}
+
+.fade {
+  -webkit-transition: opacity 500ms ease-in;
+  -moz-transition: opacity 500ms ease-in;
+  -o-transition: opacity 500ms ease-in;
+  -ms-transition: opacity 500ms ease-in;
+  transition: opacity 500ms ease-in;
+  opacity: 0;
+}
+/* .fade.fade-in {
+  opacity: 1;
+}
+.fade.fade-out {
+  opacity: 0;
+} */
+
+.fade.fade-in {
+  opacity: 1;
+  animation: fadeIn 500ms;
+}
+
+.fade.fade-out {
+  animation: fadeOut 500ms;
+  /* display: none; */
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    display: block;
+  }
+  100% {
+    opacity: 1;
+    display: block;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    display: block;
+  }
+  100% {
+    opacity: 0;
+    /* display: none; */
+  }
+}
+
+ul.click-list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+ul.click-list li {
+  padding: 5px;
+  border:1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+ul.click-list li:hover {
+  background: grey;
+  color: white;
+}
+ul.click-list li:active {
+  background: black;
+  color: white;
+  border-color: black;
+}
