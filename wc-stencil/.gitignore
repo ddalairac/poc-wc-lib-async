@@ -1,6 +1,7 @@
 dist/
 www/
 loader/
+course-examples/
 
 *~
 *.sw[mnpcod]
