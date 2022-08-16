@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Method, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, State, Method, Watch, Event, EventEmitter, Element } from '@stencil/core';
 
 @Component({
   tag: 'my-component',
@@ -14,6 +14,9 @@ export class MyComponent {
   str: string;
   @Prop() bool: boolean;
   @State() open: boolean; // Dispara cambios cuando cuando hay una mutacion
+  @Element() host: HTMLElement;
+
+  fadeElement: HTMLElement; // 'ref' da valor a este atributo
 
   @Method() // Expone el metodo fuera del componente
   toggle() {
@@ -27,16 +30,15 @@ export class MyComponent {
     }
   }
 
-  @Event(
-    // {
-    //   // *Stencil custom Attr
-    //   // eventName: 'myCompEvent', // A string custom event name to override the default.
-    //   // cancelable: true, //A Boolean indicating whether the event is cancelable.
-    //   // *JS native Attr
-    //   // bubbles: true, //A Boolean indicating whether the event bubbles up through the DOM or not.
-    //   // composed: true, //A Boolean value indicating whether or not the event can bubble across the boundary between the shadow DOM and the regular DOM.
-    // }
-  )
+  @Event()
+  // {
+  //   // *Stencil custom Attr
+  //   // eventName: 'myCompEvent', // A string custom event name to override the default.
+  //   // cancelable: true, //A Boolean indicating whether the event is cancelable.
+  //   // *JS native Attr
+  //   // bubbles: true, //A Boolean indicating whether the event bubbles up through the DOM or not.
+  //   // composed: true, //A Boolean value indicating whether or not the event can bubble across the boundary between the shadow DOM and the regular DOM.
+  // }
   myAvengerEvent: EventEmitter<string>;
 
   onAvengerClick(avenger: string) {
@@ -67,7 +69,7 @@ export class MyComponent {
         </p>
         <button onClick={this.onClickBtn.bind(this, 'some param')}>Toogle display</button>
         <hr />
-        <div class={this.cssFadeInOut()}>
+        <div class={this.cssFadeInOut()} ref={el => (this.fadeElement = el)}>
           <b>Some open/close content</b>
           <br />
           <div class="bool-value">
@@ -99,9 +101,11 @@ export class MyComponent {
   // }
 
   // // Stencil LifeCycle
-  // componentDidLoad() {
-  //   console.log('componentDidLoad');
-  // }
+  componentDidLoad() {
+    console.log('componentDidLoad');
+    console.log('fadeElement', this.fadeElement);
+    console.log('host Element', this.host, 'id:',this.host.getAttribute('id'));
+  }
 
   // // Stencil LifeCycle
   // componentWillUpdate() {

@@ -1,9 +1,10 @@
 my-component {
   display: block;
+  background: rgb(240, 240, 240);
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  margin: 10px 0;
+  margin: 10px 10px 10px 0;
 }
 
 /* shadow: false */
@@ -62,14 +63,15 @@ my-component[bool='false'] .bool-value p {
   }
 }
 
-ul.click-list{
+ul.click-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 ul.click-list li {
   padding: 5px;
-  border:1px solid #ccc;
+  background: white;
+  border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 3px;
   cursor: pointer;

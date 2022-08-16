@@ -1,4 +1,4 @@
-import { Component, Prop, h, State } from '@stencil/core';
+import { Component, Prop, h, State, Element } from '@stencil/core';
 import FieldUtils from './FieldUtils';
 import iField from './iField';
 
@@ -8,15 +8,16 @@ import iField from './iField';
   shadow: false,
 })
 export class MyInput implements iField {
+  type: string = 'text';
   @Prop() name: string;
   @Prop() label: string;
-  @Prop() id: string;
+  @Prop() placeholder: string;
+  @Prop() disabled: boolean;
   @State() inputValue: string;
-  inputEl: HTMLInputElement;
-  type: string = 'text';
+  @Element() host: HTMLElement;
 
   ensureID() {
-    return FieldUtils.ensureID(this);
+    return FieldUtils.ensureID(this, this.host.getAttribute('id'));
   }
 
   ensureLabel() {
@@ -28,15 +29,15 @@ export class MyInput implements iField {
     console.log('inputValue', this.inputValue);
   }
 
-  componentWillLoad() {
-    if (!this.name) throw Error(`'my-input' component require a 'name' attribute`);
-  }
-
   render() {
     return (
-      <div>
+      <div class="field">
         <label htmlFor={this.ensureID()}>{this.ensureLabel()}</label>
-        <input id={this.ensureID()} name={this.name} ref={el => (this.inputEl = el)} value={this.inputValue} onInput={this.onInput.bind(this)} />
+        <input id={this.ensureID()} 
+        name={this.name} 
+        placeholder={this.placeholder} 
+        disabled={this.disabled} 
+        value={this.inputValue} onInput={this.onInput.bind(this)} />
       </div>
     );
   }

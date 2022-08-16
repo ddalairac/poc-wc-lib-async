@@ -12,21 +12,33 @@
     p {
       color: grey;
     }
+    .container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      height: 100vh;
+    }
   </style>
 </head>
 
 <body>
   <p>some text</p>
-  <my-input name="full_name"></my-input>
-
-  <my-component someStr="World! " bool="true">Slot content</my-component>
-  
+  <my-input name="age"></my-input>
+  <my-input id="fullname" name="full_name" placeholder="ingrese su nombre"></my-input>
+  <my-input id="location" name="location" disabled="true"></my-input>
   <button id="root-btn">Toggle (trigger method outside component)</button>
+  <div class="container">
+    <my-list id="list"></my-list>
+    <my-component someStr="World! " bool="true" id="some-id">Slot content</my-component>
+  </div>
+
 
   <script>
     // HTML Elements
     const myComponent = document.querySelector('my-component')
     const toggleBTN = document.querySelector('#root-btn')
+    const listEl = document.querySelector('#list')
 
     // Props change
     let bool = true
@@ -40,7 +52,7 @@
       }
       bool = !bool
     }, 3000);
-    
+
     // event listener
     toggleBTN.addEventListener('click', () => {
       myComponent.toggle();
@@ -48,6 +60,24 @@
     myComponent.addEventListener('myAvengerEvent', event => {
       console.log('myAvengerEvent', event);
     });
+    listEl.addEventListener('myAvengerEvent', event => {
+      console.log('listEl event (is iron man REF)', arrAvengers[0] === event.detail);
+    });
+
+    // Methods
+    console.log('listEl', listEl)
+    // arrAvengers = ['Iron man', 'Thor', 'Black widow', 'Hulk', 'Hawkeye', 'Capitan America'];
+    arrAvengers = [
+      { id: 0, name: 'Iron man' },
+      { id: 1, name: 'Thor' },
+      { id: 2, name: 'Black widow' },
+      { id: 3, name: 'Hulk' },
+      { id: 4, name: 'Hawkeye' },
+      { id: 5, name: 'Capitan America' }
+    ];
+    setTimeout(() => {
+      listEl.setAvengersArr(arrAvengers)
+    }, 1000);
   </script>
 </body>
 

@@ -1,0 +1,31 @@
+my-list {
+  display: block;
+  background: rgb(240, 240, 240);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 10px 10px 0;
+}
+
+ul.click-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+ul.click-list li {
+  padding: 5px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+ul.click-list li:hover {
+  background: grey;
+  color: white;
+}
+ul.click-list li:active {
+  background: black;
+  color: white;
+  border-color: black;
+}

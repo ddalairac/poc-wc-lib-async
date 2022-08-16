@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { iAvenger } from "./components/my-list/my-list";
 export namespace Components {
     interface MyComponent {
         "bool": boolean;
@@ -12,14 +13,22 @@ export namespace Components {
         "toggle": () => Promise<void>;
     }
     interface MyInput {
-        "id": string;
+        "disabled": boolean;
         "label": string;
         "name": string;
+        "placeholder": string;
+    }
+    interface MyList {
+        "setAvengersArr": (arr: iAvenger[]) => Promise<void>;
     }
 }
 export interface MyComponentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMyComponentElement;
+}
+export interface MyListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMyListElement;
 }
 declare global {
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
@@ -34,9 +43,16 @@ declare global {
         prototype: HTMLMyInputElement;
         new (): HTMLMyInputElement;
     };
+    interface HTMLMyListElement extends Components.MyList, HTMLStencilElement {
+    }
+    var HTMLMyListElement: {
+        prototype: HTMLMyListElement;
+        new (): HTMLMyListElement;
+    };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
         "my-input": HTMLMyInputElement;
+        "my-list": HTMLMyListElement;
     }
 }
 declare namespace LocalJSX {
@@ -46,13 +62,18 @@ declare namespace LocalJSX {
         "str"?: string;
     }
     interface MyInput {
-        "id"?: string;
+        "disabled"?: boolean;
         "label"?: string;
         "name"?: string;
+        "placeholder"?: string;
+    }
+    interface MyList {
+        "onMyAvengerEvent"?: (event: MyListCustomEvent<iAvenger>) => void;
     }
     interface IntrinsicElements {
         "my-component": MyComponent;
         "my-input": MyInput;
+        "my-list": MyList;
     }
 }
 export { LocalJSX as JSX };
@@ -61,6 +82,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "my-input": LocalJSX.MyInput & JSXBase.HTMLAttributes<HTMLMyInputElement>;
+            "my-list": LocalJSX.MyList & JSXBase.HTMLAttributes<HTMLMyListElement>;
         }
     }
 }
