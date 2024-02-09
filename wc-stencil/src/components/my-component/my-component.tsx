@@ -4,6 +4,7 @@ import { Component, Prop, h, State, Method, Watch, Event, EventEmitter, Element 
   tag: 'my-component',
   styleUrl: 'my-component.css',
   shadow: false,
+  scoped: true,
 })
 export class MyComponent {
   @Prop({

@@ -9,6 +9,7 @@ export interface iAvenger {
   tag: 'my-list',
   styleUrl: 'my-list.css',
   shadow: false,
+  scoped: true,
 })
 export class MyList {
   @State() arr: iAvenger[] = [{ id: -1, name: 'default' }]; 

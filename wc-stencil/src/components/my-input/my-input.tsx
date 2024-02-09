@@ -6,6 +6,7 @@ import iField from './iField';
   tag: 'my-input',
   styleUrl: 'my-input.css',
   shadow: false,
+  scoped: true,
 })
 export class MyInput implements iField {
   type: string = 'text';
@@ -26,7 +27,7 @@ export class MyInput implements iField {
 
   onInput(event: Event) {
     this.inputValue = (event.target as HTMLInputElement).value;
-    console.log('inputValue', this.inputValue);
+    // console.log('inputValue', this.inputValue);
   }
 
   render() {
